@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth2.0 Redirect</title>
+</head>
+
+<body>
+    <h1>Auth2.0 Redirect</h1>
+</body>
+<script>
+    function param2Obj(url) {
+        const search = decodeURIComponent(url.split('?')[1]).replace(/\+/g, ' ')
+        if (!search) {
+            return {}
+        }
+        const obj = {}
+        const searchArr = search.split('&')
+        searchArr.forEach(v => {
+            const index = v.indexOf('=')
+            if (index !== -1) {
+                const name = v.substring(0, index)
+                const val = v.substring(index + 1, v.length)
+                obj[name] = val
+            }
+        })
+        return obj
+    }
+    
+    function save(code) {
+        console.log(code)
+        if (window.localStorage) {
+            window.localStorage.setItem('x-admin-oauth-code', code)
+            window.localStorage.clear('x-admin-oauth-code')
+            window.close()
+        }
+    }
+
+    var code = param2Obj(window.location.hash)['code']
+    if (code) {
+        save(code)
+    }
+    code = param2Obj(window.location.search)['code']
+    if (code) {
+        save(code)
+    }
+
+</script>
+
+</html>

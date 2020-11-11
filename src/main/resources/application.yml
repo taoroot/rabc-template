@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    dynamic:
+      primary: sys_master
+      strict: true
+      druid:
+        initial-size: 10
+        max-active: 20
+        min-idle: 3
+        max-wait: 10000
+        validation-query: 'select 1'
+      datasource:
+        sys_master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: rbac-template
+          password: rbac-template
+          url: jdbc:mysql://sys-master-server:3306/rbac-template?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+  redis:
+    host: redis-server
+    port: 6379
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  global-config:
+    banner: false
+    db-config:
+      table-underline: true
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+
+security:
+  token:
+    sys:
+      secret: y6o3d1ivcunexjrzf4s0578baltwk9mhpqg2 # JWT密钥必须36字节
+      expire: 3600000 # 过期时间,毫秒
+
+server:
+  port: 80
+
+logging:
+  level:
+    root: info
+    com.github.taoroot: debug
+    com.baomidou: info
